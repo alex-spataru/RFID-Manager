@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/Serial.png</file>
+        <file>images/LED_Green.png</file>
+        <file>images/LED_Red.png</file>
+        <file>images/RFID_72px.png</file>
+        <file>images/RFID_156px.png</file>
+        <file>images/RFID-Tag_256px.png</file>
+        <file>images/RFID-Tag_128px.png</file>
+        <file>images/Edit.png</file>
+    </qresource>
+</RCC>
