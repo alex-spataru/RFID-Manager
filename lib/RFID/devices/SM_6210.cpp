@@ -41,15 +41,13 @@ static const quint8 HEADER_START_CODE       = 0xa0;
 static const quint8 HEADER_RESULT_CODE      = 0xe4;
 static const quint8 HEADER_RESPONSE_CODE    = 0xe0;
 
-// Communication modes
-static const quint8 COMM_RS232              = 0x03;
-
 // Operation command codes
 static const quint8 DEV_STOP_SEARCH         = 0xa8;
 static const quint8 DEV_WRITE_TAG_MW        = 0xab;
 static const quint8 DEV_GET_SINGLE_PARAM    = 0x61;
 static const quint8 DEV_READ_SINGLE_TAG     = 0x82;
 static const quint8 DEV_READ_TAG_DATA       = 0x80;
+static const quint8 CRP_ADD_USERCODE        = 0x64;
 
 // Data reading options
 static const quint8 RFU_LABEL[2]            = {0x00, 0x00};
@@ -57,13 +55,13 @@ static const quint8 EPC_LABEL[2]            = {0x00, 0x01};
 static const quint8 TID_LABEL[2]            = {0x00, 0x02};
 static const quint8 USR_LABEL[2]            = {0x00, 0x03};
 
-// Card reader paremeters
-static const quint8 CRP_ADD_USERCODE        = 0x64;
-
 //------------------------------------------------------------------------------
 // Utility functions
 //------------------------------------------------------------------------------
 
+/**
+ * Calculates an 8-bit checksum with 2's complement for the given @a data
+ */
 static quint8 Checksum(const QByteArray& data)
 {
    quint8 checksum = 0;
@@ -103,6 +101,8 @@ SM_6210::~SM_6210()
 // Driver function implementations
 //------------------------------------------------------------------------------
 
+#include <qdebug.h>
+
 /**
  * @brief UHF_530_RDM::scan
  * Asks the UHF reader to send EPC, TagID, User and RFU data repeatedly for
@@ -115,12 +115,12 @@ void SM_6210::scan()
    if(!currentTag()) {
       m_selector = 0;
 
-      // Send stop-and-reset command every 10 failed cycles
+      // Send stop-and-reset command every 10 failed reading cycles
       if(m_shitCount > 10) {
          m_shitCount = 0;
          QByteArray data;
          data.append(static_cast<char>(HEADER_START_CODE));
-         data.append(static_cast<char>(COMM_RS232));
+         data.append(static_cast<char>(0x03));
          data.append(static_cast<char>(DEV_STOP_SEARCH));
          data.append(static_cast<char>(0x00));
          data.append(static_cast<char>(Checksum(data)));
@@ -139,26 +139,57 @@ void SM_6210::scan()
          data.append(static_cast<char>(Checksum(data)));
          RFID_SerialManager::getInstance()->writeData(data);
       }
+
+      // Increase shit count until we find a tag
+      ++m_shitCount;
    }
 
+   // Current tag available, read all tag data
    else {
       switch(m_selector) {
          case 0:
-            readTid();
+            readEpc();
             break;
          case 1:
-            readRfu();
+            readTid();
             break;
          case 2:
+            readRfu();
+            break;
+         case 3:
             readUsr();
             break;
          default:
-            readEpc();
-            m_selector = -1;
+            m_selector = 0;
             break;
       }
 
-      ++m_selector;
+      // Tag ID empty, try to read it
+      if(currentTag()->tid.isEmpty())
+         m_selector = 1;
+
+      // RFU empty, try ro read it
+      else if(currentTag()->rfu.isEmpty())
+         m_selector = 2;
+
+      // User data empty, try to read it
+      else if(currentTag()->usr->isEmpty())
+         m_selector = 3;
+
+      // EPC empty, try to read it
+      else if(currentTag()->epc.isEmpty())
+         m_selector = 0;
+
+      // Try to read next tag section if current section cannot be read
+      if(m_shitCount > RFID_MAX_SHIT_TRESHOLD) {
+         m_shitCount = 0;
+         ++m_selector;
+      }
+
+      // Increase shit count (shit count is set to 0 if a section is read
+      // successfully). This allows us to know if a tag's section cannot
+      // be read or has an error
+      ++m_shitCount;
    }
 }
 
@@ -311,15 +342,15 @@ bool SM_6210::lockTag()
 bool SM_6210::eraseTag()
 {
    QByteArray epc;
-   for(int i = 0; i < 12; ++i)
+   for(int i = 0; i < RFID_EPC_LENGTH; ++i)
       epc.append(static_cast<char>(0x00));
 
    QByteArray usr;
-   for(int i = 0; i < 13; ++i)
+   for(int i = 0; i < RFID_USER_LENGTH; ++i)
       usr.append(static_cast<char>(0x00));
 
    QByteArray rfu;
-   for(int i = 0; i < 8; ++i)
+   for(int i = 0; i < RFID_RFU_LENGTH; ++i)
       rfu.append(static_cast<char>(0x00));
 
    return writeEpc(epc) && writeRfu(rfu) && writeUserData(usr);
@@ -409,10 +440,6 @@ void SM_6210::onDataReceived(const QByteArray& data)
       else if(readStdResult())
          return;
 
-      // Packet not read, increase shit count in order to send reset command
-      // to UHF reader every now an then
-      ++m_shitCount;
-
       // Clear buffer if it exceeds max size
       if(BUFFER.size() > RFID_MAX_BUFFER_SIZE)
          BUFFER.clear();
@@ -460,7 +487,7 @@ bool SM_6210::readAckPacket()
 
       QByteArray data;
       data.append(static_cast<char>(HEADER_START_CODE));
-      data.append(static_cast<char>(COMM_RS232));
+      data.append(static_cast<char>(0x03));
       data.append(static_cast<char>(DEV_READ_SINGLE_TAG));
       data.append(static_cast<char>(0x00));
       data.append(static_cast<char>(Checksum(data)));
@@ -718,7 +745,7 @@ QByteArray SM_6210::readInformationPacket(const quint8 label[2],
       else
          headerOk &= BUFFER[shift + 2] == static_cast<char>(DEV_READ_TAG_DATA);
 
-      // Check header to see if this is a
+      // Check that header corresponds to the requested data section
       if(!headerOk) {
          *ok = false;
          return QByteArray();
@@ -736,13 +763,16 @@ QByteArray SM_6210::readInformationPacket(const quint8 label[2],
       // Verify checksum and get read data
       quint8 checksum = static_cast<quint8>(BUFFER[shift + len + 7]);
       if(checksum == Checksum(BUFFER.mid(shift, len + 7)) || !verifyChecksum) {
-         // Get EPC
+         // Register data from packet
          QByteArray data;
          for(int j = 0; j < len; ++j)
             data.append(BUFFER.at(shift + 7 + j));
 
          // Remove read data from buffer
          BUFFER.remove(0, shift + len + 7);
+
+         // Reset shit counter
+         m_shitCount = 0;
 
          // Return obtained data
          *ok = true;

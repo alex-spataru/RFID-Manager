@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
-    <height>597</height>
+    <width>829</width>
+    <height>780</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="MW_CW">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,1">
     <item>
      <spacer name="MW_SpacerTop">
       <property name="orientation">
@@ -84,14 +84,14 @@
            <number>0</number>
           </property>
           <item>
-           <spacer name="HD_SpacerTop">
+           <spacer name="verticalSpacer_4">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>40</height>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -123,14 +123,14 @@
            </widget>
           </item>
           <item>
-           <spacer name="HD_SpacerBottom">
+           <spacer name="verticalSpacer_3">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>40</height>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -218,17 +218,14 @@
      </widget>
     </item>
     <item>
-     <spacer name="MW_SpacerBottom">
+     <spacer name="verticalSpacer_2">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Minimum</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
         <width>20</width>
-        <height>8</height>
+        <height>0</height>
        </size>
       </property>
      </spacer>
@@ -242,7 +239,7 @@
        <attribute name="title">
         <string>Hardware Configuration</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0">
         <item>
          <widget class="QGroupBox" name="HC_HardwareConfig">
           <property name="title">
@@ -288,19 +285,6 @@
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
-                 <item>
-                  <spacer name="HC_HS_SpacerTop">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
                  <item>
                   <widget class="QWidget" name="HC_HS_GridLayout" native="true">
                    <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1">
@@ -360,19 +344,6 @@
                     </item>
                    </layout>
                   </widget>
-                 </item>
-                 <item>
-                  <spacer name="HC_HS_SpacerBotom">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -582,7 +553,7 @@
        <attribute name="title">
         <string>RFID Tag Management</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
+       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,0">
         <item>
          <widget class="QTabWidget" name="TM_Data_Layout">
           <property name="currentIndex">
@@ -591,7 +562,7 @@
           <property name="tabBarAutoHide">
            <bool>false</bool>
           </property>
-          <widget class="QWidget" name="tab_4">
+          <widget class="QWidget" name="TM_TagInformtionLayout">
            <attribute name="title">
             <string>Tag Information</string>
            </attribute>
@@ -614,16 +585,6 @@
                <property name="bottomMargin">
                 <number>0</number>
                </property>
-               <item>
-                <widget class="QLabel" name="TM_TagIcon">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="pixmap">
-                  <pixmap resource="../resources/resources.qrc">:/images/RFID-Tag_128px.png</pixmap>
-                 </property>
-                </widget>
-               </item>
                <item>
                 <widget class="QWidget" name="TM_Container" native="true">
                  <layout class="QGridLayout" name="gridLayout">
@@ -829,19 +790,6 @@
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="TM_Spacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
            </layout>
           </widget>
           <widget class="QWidget" name="TM_MemoryDump_Tab">
@@ -966,16 +914,50 @@
        <attribute name="title">
         <string>Help</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0,1,0">
         <item>
-         <widget class="QWidget" name="HT_About_Layout" native="true">
-          <layout class="QVBoxLayout" name="verticalLayout_12">
+         <widget class="QWidget" name="HT_AppInfo_Widget" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <property name="spacing">
+            <number>18</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
-            <widget class="QWidget" name="HT_AppInfo_Widget" native="true">
-             <layout class="QHBoxLayout" name="horizontalLayout_13">
-              <property name="spacing">
-               <number>18</number>
-              </property>
+            <widget class="QLabel" name="HT_AppInfoLogo_Label">
+             <property name="minimumSize">
+              <size>
+               <width>156</width>
+               <height>156</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>156</width>
+               <height>156</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../resources/resources.qrc">:/images/RFID_156px.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="HT_AppInfo_Layout" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_13">
               <property name="leftMargin">
                <number>0</number>
               </property>
@@ -989,132 +971,82 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QLabel" name="HT_AppInfoLogo_Label">
-                <property name="minimumSize">
+               <spacer name="HT_AppInfo_SpacerTop">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
                  <size>
-                  <width>156</width>
-                  <height>156</height>
+                  <width>20</width>
+                  <height>0</height>
                  </size>
                 </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>156</width>
-                  <height>156</height>
-                 </size>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="HT_AppName_Label">
+                <property name="font">
+                 <font>
+                  <pointsize>18</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
                 </property>
                 <property name="text">
-                 <string/>
-                </property>
-                <property name="pixmap">
-                 <pixmap resource="../resources/resources.qrc">:/images/RFID_156px.png</pixmap>
+                 <string>AppName</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QWidget" name="HT_AppInfo_Layout" native="true">
-                <layout class="QVBoxLayout" name="verticalLayout_13">
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <spacer name="HT_AppInfo_SpacerTop">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="HT_AppName_Label">
-                   <property name="font">
-                    <font>
-                     <pointsize>18</pointsize>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>AppName</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="HT_AppVersion_Label">
-                   <property name="font">
-                    <font>
-                     <pointsize>12</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>AppVersion</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="HT_AppOrg_Label">
-                   <property name="font">
-                    <font>
-                     <pointsize>11</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>AppOrg</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="HT_AppInfo_SpacerBottom">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
+               <widget class="QLabel" name="HT_AppVersion_Label">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>AppVersion</string>
+                </property>
                </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="HT_AppOrg_Label">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>AppOrg</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="HT_AppInfo_SpacerBottom">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
             </widget>
            </item>
-           <item>
-            <spacer name="HT_About_Spacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QTextEdit" name="HT_Licence_TextEdit">
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-             <property name="html">
-              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="HT_Licence_TextEdit">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+          <property name="html">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -1123,24 +1055,8 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;THE SOFTWARE IS PROVIDED &amp;quot;AS IS&amp;quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          </property>
          </widget>
-        </item>
-        <item>
-         <spacer name="HT_Spacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item>
          <widget class="QWidget" name="HT_Control_Layout" native="true">

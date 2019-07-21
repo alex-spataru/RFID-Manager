@@ -34,6 +34,7 @@
 #define RFID_USER_LENGTH            64
 #define RFID_NUM_USER_DATAGRAMS     4
 #define RFID_CURRENT_TAG_TIMEOUT    1000
+#define RFID_MAX_SHIT_TRESHOLD      250
 #define RFID_MAX_BUFFER_SIZE        1024 * 16
 
 typedef struct {
