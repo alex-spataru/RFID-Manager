@@ -29,8 +29,7 @@ class SM_6210 : public RFID_Reader
 {
       Q_OBJECT
 
-   public:
-      SM_6210();
+   public: SM_6210();
       ~SM_6210();
 
       void scan();

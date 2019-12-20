@@ -199,7 +199,8 @@ RFID_TagList RFID::rfidTags() const
 QStringList RFID::rfidReaders() const
 {
    return QStringList {
-      "SM-6210 USB UHF RFID Programmer"
+      "SM-6210 USB UHF RFID Programmer",
+      "RDM530 USB UART"
    };
 }
 
