@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+# Qt files
+*.pro.user
+
 # Compiled Object files
 *.slo
 *.lo
